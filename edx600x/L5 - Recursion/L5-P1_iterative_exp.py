@@ -12,10 +12,9 @@ def iterPower(base, exp):
     while exp > 0:
         result *= base #update the value of state variable "result" iteratively
         exp -= 1 #update the value of state variable "i" iteratively
-        counter +=1
     return result
 
-x=3.2
-y=0   
+x=3
+y=4  
 print iterPower(x,y)
 print x**y
