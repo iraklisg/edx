@@ -10,7 +10,7 @@ def Towers(n, fr, to, spare):
     if n == 1:
         print '[``````````````]'
         printMove(fr, to)
-        print '[,,,,,,,,,,,,,,]'
+        print '[,,,,,,,,,,,,,,,]'
         
     else:
         print '1st step, value of n=',n
