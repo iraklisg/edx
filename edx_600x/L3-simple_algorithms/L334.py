@@ -10,7 +10,7 @@ while (abs(ans**2 - x)) >= epsilon and ans <= x and numGuesses <=500000:
     print 'ans = ',ans,'and (ans^2-x) = ',abs(ans**2 - x)
     ans += step
     numGuesses += 1
-print('numGuesses = ' + str(numGuesses))
+print('numGsuesses = ' + str(numGuesses))
 if abs(ans**2-x) >= epsilon:
     print('Failed on square root of ' + str(x))
 else:
