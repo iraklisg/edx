@@ -11,7 +11,16 @@ def findDivisors(n1, n2):
 
 
 divisors = findDivisors(20, 100)
+print divisors
 total = 0
 for d in divisors:
     total += d
 print(total)
+
+print range(3,10,2)
+
+x = (1, 2, (3, 'John', 4), 'Hi')
+print x
+
+s = 'bananas'
+print s[0:-1:2]
