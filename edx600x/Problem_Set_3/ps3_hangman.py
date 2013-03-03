@@ -55,10 +55,10 @@ def isWordGuessed(secretWord, lettersGuessed):
     '''
     # FILL IN YOUR CODE HERE...
     if     len(secretWord) <= 1:
-        print 'BASE CASE: check %s in %s and return %s'%(secretWord[0], lettersGuessed, secretWord[0] in lettersGuessed) 
+        #print 'BASE CASE: check %s in %s and return %s'%(secretWord[0], lettersGuessed, secretWord[0] in lettersGuessed) 
         return secretWord[0] in lettersGuessed
     else:
-        print 'RECURSIVE CASE: check %s in %s and return %s'%(secretWord[0], lettersGuessed, secretWord[1:]) 
+        #print 'RECURSIVE CASE: check %s in %s and return %s'%(secretWord[0], lettersGuessed, secretWord[1:]) 
         #print 'RECURSIVE CASE: check %s in %s and return %s, and remains %s'%(secretWord[0], lettersGuessed, isWordGuessed(lettersGuessed, secretWord[1:]) and (secretWord[0] in lettersGuessed), secretWord[1:]) 
         return (secretWord[0] in lettersGuessed) and isWordGuessed(secretWord[1:], lettersGuessed) 
 
@@ -106,39 +106,33 @@ def hangman(secretWord):
     '''
     # FILL IN YOUR CODE HERE...
     lettersGuessed = [] # initialization of list containing the letters guessed so far
-    availableLetters = getAvailableLetters(lettersGuessed)
     mistakesMade = 0
-    
     print 'Welcome to the game, Hangman!'
     print 'I am thinking of a word that is %s letters long.' %(len(secretWord))
-    print '-------------'
     counter = 8
     while True:
-        print 'You have %s guesses left.'%(counter)
-        print "Available letters:", getAvailableLetters(lettersGuessed)
-        guess = (raw_input('Please guess a letter: ').lower()) #the current letter guessed
-        if guess not in availableLetters:
-            print 'Oops! You\'ve already guessed that letter:', getGuessedWord(secretWord, lettersGuessed)
-            print '-------------'
-        else:
-            if guess in secretWord:
-                lettersGuessed.append(guess)
-                availableLetters = getAvailableLetters(lettersGuessed)
+        print '-------------'
+        if (isWordGuessed(secretWord, lettersGuessed) == False) and (mistakesMade < 8):
+            print 'You have %s guesses left.'%(counter)
+            availableLetters = getAvailableLetters(lettersGuessed) # update turn-by-turn the availableLetters list.  If "guess in availableLetters", then letterGuessed list grows and availableLetters shrinks
+            print "Available letters:", availableLetters
+            guess = (raw_input('Please guess a letter: ').lower()) #the current letter guessed
+            if guess not in availableLetters: #guess have been used before
+                print 'Oops! You\'ve already guessed that letter:', getGuessedWord(secretWord, lettersGuessed)
+            elif guess in secretWord:
+                lettersGuessed.append(guess) # guess have not been used before and is comprised in secretWord
                 print 'Good guess:', getGuessedWord(secretWord, lettersGuessed)
-                print '-------------'
-            else:
-                lettersGuessed.append(guess)
-                availableLetters = getAvailableLetters(lettersGuessed)
-                print 'Oops! That letter is not in my word:', getGuessedWord(secretWord, lettersGuessed)
-                counter -= 1
-                mistakesMade += 1
-                print '-------------'
-            if mistakesMade == 8:
-                print 'Sorry, you ran out of guesses. The word was %s.'%(secretWord)
-                break
-            if "_ " not in getGuessedWord(secretWord, lettersGuessed):
-                print 'Congratulations, you won!'
-                break               
+            elif guess not in secretWord: # guess have not been used before and is not comprised in secretWord
+                    lettersGuessed.append(guess)
+                    print 'Oops! That letter is not in my word:', getGuessedWord(secretWord, lettersGuessed)
+                    counter -= 1 # loose one try!
+                    mistakesMade += 1
+        elif (isWordGuessed(secretWord, lettersGuessed) == False) and (mistakesMade == 8):
+            print 'Sorry, you ran out of guesses. The word was %s.'%(secretWord)
+            break
+        elif isWordGuessed(secretWord, lettersGuessed) == True:
+            print 'Congratulations, you won!'
+            break               
 
                 
                 
