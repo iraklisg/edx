@@ -76,8 +76,7 @@ def getWordScore(word, n):
     n: integer (HAND_SIZE; i.e., hand size required for additional points)
     returns: int >= 0
     """
-    # TO DO ... <-- Remove this comment when you code this function
-
+    return sum(len(word)*[SCRABBLE_LETTER_VALUES[i] for i in word] if len(word) != n else [50] + len(word)*[SCRABBLE_LETTER_VALUES[i] for i in word])
 
 
 #
@@ -90,7 +89,7 @@ def displayHand(hand):
     For example:
     >>> displayHand({'a':1, 'x':2, 'l':3, 'e':1})
     Should print out something like:
-       a x x l l l e
+       a x x l l l e[]
     The order of the letters is unimportant.
 
     hand: dictionary (string -> int)
@@ -147,8 +146,15 @@ def updateHand(hand, word):
     hand: dictionary (string -> int)    
     returns: dictionary (string -> int)
     """
-    # TO DO ... <-- Remove this comment when you code this function
+#     TO DO ... <-- Remove this comment when you code this function
+#    updated_hand = hand.copy() []
+#    for i in word:
+#        updated_hand[i] = updated_hand.get(i, 0) - 1
+#    return updated_hand
 
+# ALTERNATIVE CODE: dict conditional comprehension { (some_key if condition else default_key):(something_if_true if condition else something_if_false) for key, value in dict_.items() }
+
+    return {key:((hand.get(key, 0) - getFrequencyDict(word)[key]) if key in set(word) else hand.get(key)) for key in hand.keys()}
 
 
 #
@@ -165,7 +171,30 @@ def isValidWord(word, hand, wordList):
     hand: dictionary (string -> int)
     wordList: list of lowercase strings
     """
-    # TO DO ... <-- Remove this comment when you code this function
+    updated_hand = hand.copy()
+    if word not in wordList:
+        return False
+    else:
+        for i in word:
+            if updated_hand.has_key(i) == False or updated_hand.get(i) <= 0:
+                return False
+            updated_hand[i] =   updated_hand.get(i) - 1
+    return True
+
+# ALTERNATIVE
+#    updated_hand = hand.copy()
+#        ans = 1
+#        if word not in wordList:
+#            return False
+#        else:
+#            for i in word:
+#                if updated_hand.has_key(i) == T# TO DO... <-- Remove this comment when you code this functionrue and updated_hand.get(i) > 0:
+#                    ans *= 1
+#                    updated_hand[i] =   updated_hand.get(i) - 1
+#                else:
+#                    ans *= 0
+#                    break
+#            return bool(ans)
 
 
 #
@@ -179,7 +208,7 @@ def calculateHandlen(hand):
     hand: dictionary (string-> int)
     returns: integer
     """
-    # TO DO... <-- Remove this comment when you code this function
+    return sum(hand.values())
 
 
 
@@ -189,7 +218,7 @@ def playHand(hand, wordList, n):
 
     * The hand is displayed.
     * The user may input a word or a single period (the string ".") 
-      to indicate they're done playing
+      to indicate they're done playing not modify hand.
     * Invalid words are rejected, and a message is displayed asking
       the user to choose another word until they enter a valid word or "."
     * When a valid word is entered, it uses up letters from the hand.
@@ -202,37 +231,41 @@ def playHand(hand, wordList, n):
 
       hand: dictionary (string -> int)
       wordList: list of lowercase strings
-      n: integer (HAND_SIZE; i.e., hand size required for additional points)
+      n: integer (HAND_SIZE; icalculateHandlen(hand).e., hand size required for additional points)
       
     """
     # BEGIN PSEUDOCODE <-- Remove this comment when you code this function; do your coding within the pseudocode (leaving those comments in-place!)
     # Keep track of the total score
-    
+    total_score = 0
     # As long as there are still letters left in the hand:
-    
+    while calculateHandlen(hand) > 0:
         # Display the hand
-        
+        print 'Current Hand: ',
+        displayHand(hand)
         # Ask user for input
-        
+        word = raw_input("Enter word, or a \".\" to indicate that you are finished: ")
         # If the input is a single period:
-        
+        if word == ".":
             # End the game (break out of the loop)
-
-            
+            break
         # Otherwise (the input is not a single period):
-        
+        else:
             # If the word is not valid:
-            
-                # Reject invalid word (print a message followed by a blank line)
-
+            if isValidWord(word, hand, wordList) == False:
+                # Reject invalid woprint 'Goodbye! Total score: %s points.'%(total_score)rd (print a message followed by a blank line)
+                print 'Invalid word, please try again.'
+                print ""
             # Otherwise (the word is valid):
-
+            else:
                 # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
-                
+                total_score += getWordScore(word, n)
+                print '"%s" earned %s points. Total: %s points'%(word, getWordScore(word, n), total_score)
+                print ""
                 # Update the hand 
-                
-
+                hand = updateHand(hand, word)
     # Game is over (user entered a '.' or ran out of letters), so tell user the total score
+    print 'Goodbye! Total score: %s points.'%(total_score)
+    print
 
 
 #
@@ -252,7 +285,27 @@ def playGame(wordList):
     2) When done playing the hand, repeat from step 1    
     """
     # TO DO ... <-- Remove this comment when you code this function
-    print "playGame not yet implemented." # <-- Remove this line when you code the function
+    n = HAND_SIZE
+    hand = {}
+    flag = ""
+    while True:
+        flag = raw_input('Enter n to deal a new hand, r to replay the last hand, or e to end game: ')
+        if flag == 'n':
+            hand =  dealHand(n)
+            playHand(hand, wordList, n)
+        elif flag == 'r' and hand == {}:
+            print 'You have not played a hand yet. Please play a new hand first!'
+            print
+        elif flag == 'r' and hand != {}:
+            playHand(hand, wordList, n)
+        elif flag == 'e':
+            break
+        else:
+            print 'Invalid command.'
+            print
+            
+            
+        
    
 
 
