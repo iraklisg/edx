@@ -24,7 +24,7 @@ def program3(L1, L2):
             intersection.append(elt)
     return intersection
 
-#1 step for assign intersection and 1 step for return
+#1 step for assign intersection and 1 step for return, =total 2 (I)
 # outer loop runs n times, each time performing:
 #    1 step for check
 #    n steps in worst case scenario assuming that elt found in L2 is True in the n-th element of L2
