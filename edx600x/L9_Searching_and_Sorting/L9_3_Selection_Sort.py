@@ -8,11 +8,11 @@ def selSort(L):
                 minIndx = j #then set minIndx = j
                 minVal= L[j] # and set minVal = L[j] i.e. the value of that element
             j += 1
-        # I swap L[i] with L[minIndx]. That is:
+        # I swap L[i] with L[minIndx], using the helper variable temp. That is:
         # ...I set variable temp to be equal to L[i] 
         temp = L[i]
-        # ...I swap the value of L[i] with L[j] , where j is the index of the element with the smallest value compared to L[i]
+        # ...I swap the value of L[i] to be equal with L[j] (where j is the index of the element with the smallest value compared to L[i])
         
         L[i] = L[minIndx]
-        # ...I swap the L[j] , j is the index with the min value I found with L[i]
+        # ...I swap the L[j] (j is the index with the min value I found), to be equal to L[i]
         L[minIndx] = temp
