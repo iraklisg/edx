@@ -144,9 +144,9 @@ def applyShift(text, shift):
     """
     ### TODO.
     ### HINT: This is a wrapper function.
-    cipher = buildCoder(shift)
-    ciphertext = applyCoder(text, cipher)
-    return ciphertext
+#    cipher = buildCoder(shift)
+#    ciphertext = applyCoder(text, cipher)
+#    return ciphertext
     return applyCoder(text, buildCoder(shift))
 
 #
@@ -160,7 +160,27 @@ def findBestShift(wordList, text):
     returns: 0 <= int < 26
     """
     ### TODO
-    return "Not yet implemented." # Remove this comment when you code the function
+    #For every possible cipher key : [0, 25] (3)
+    number_of_actual_words_so_far = 0
+    for key in range(26):
+    #   decipher text using applyShift(text, 26-shift)
+        plaintext = applyShift(text, 25-key)        
+    #   Break deciphered text in a list of deciphered words using  " " as separator
+        plaintext_list = plaintext.split(' ')
+    #   for every word in the list of deciphered words
+        number_of_current_actual_words = 0
+        for word in plaintext_list:
+    #        check if this word is an actual word (i.e. is comprised in wordList) using isWord(wordList, word)
+            if isWord(wordList, word):
+    #            if True: increase the current number_of_actual_words flag by 1
+                number_of_current_actual_words += 1
+    #   If the number_of_actual_words is more than the largest number of actual words found so far, then:
+        if number_of_current_actual_words > number_of_actual_words_so_far:
+            number_of_actual_words_so_far = number_of_current_actual_words
+    #            update the best_shift to the current key
+            best_key = key 
+    # Finally return the best shift
+    return best_key
 
 def decryptStory():
     """
