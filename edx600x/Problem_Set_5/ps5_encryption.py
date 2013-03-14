@@ -126,7 +126,10 @@ def applyCoder(text, coder):
     returns: text after mapping coder chars to original text
     """
     ### TODO.
-    return "Not yet implemented." # Remove this comment when you code the function
+    ciphertext = "" #initialize ciphertex
+    for i in text:
+        ciphertext += str(coder.get(i, i))
+    return ciphertext
 
 def applyShift(text, shift):
     """
@@ -141,7 +144,10 @@ def applyShift(text, shift):
     """
     ### TODO.
     ### HINT: This is a wrapper function.
-    return "Not yet implemented." # Remove this comment when you code the function
+    cipher = buildCoder(shift)
+    ciphertext = applyCoder(text, cipher)
+    return ciphertext
+    return applyCoder(text, buildCoder(shift))
 
 #
 # Problem 2: Decryption
