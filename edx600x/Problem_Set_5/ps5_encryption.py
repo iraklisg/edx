@@ -160,8 +160,9 @@ def findBestShift(wordList, text):
     returns: 0 <= int < 26
     """
     ### TODO
-    #For every possible cipher key : [0, 25] (3)
+   #For every possible cipher key : [0, 25] (3)
     number_of_actual_words_so_far = 0
+    best_key = 25
     for key in range(26):
     #   decipher text using applyShift(text, 26-shift)
         plaintext = applyShift(text, 25-key)        
@@ -180,7 +181,8 @@ def findBestShift(wordList, text):
     #            update the best_shift to the current key
             best_key = key 
     # Finally return the best shift
-    return best_key
+    return 25 - best_key
+
 
 def decryptStory():
     """
@@ -192,7 +194,10 @@ def decryptStory():
     returns: string - story in plain text
     """
     ### TODO.
-    return "Not yet implemented." # Remove this comment when you code the function
+    ciphertext = getStoryString()
+    wordList = loadWords()
+    key = findBestShift(wordList, ciphertext)
+    return applyShift(ciphertext, key)
 
 #
 # Build data structures used for entire session and run encryption
@@ -200,9 +205,11 @@ def decryptStory():
 
 if __name__ == '__main__':
     # To test findBestShift:
-    wordList = loadWords()
-    s = applyShift('Hello, world!', 8)
-    bestShift = findBestShift(wordList, s)
-    assert applyShift(s, bestShift) == 'Hello, world!'
+#    wordList = loadWords()
+#    s = applyShift('Hello, world!', 8)
+#    bestShift = findBestShift(wordList, s)
+#    assert applyShift(s, bestShift) == 'Hello, world!'
     # To test decryptStory, comment the above four lines and uncomment this line:
-    #    decryptStory()
+        decryptStory()
+print getStoryString()
+print decryptStory()
