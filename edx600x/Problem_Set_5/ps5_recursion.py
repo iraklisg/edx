@@ -16,6 +16,11 @@ def reverseString(aStr):
     returns: a reversed string
     """
     ### TODO.
+    #Base case
+    if len(aStr) < 2:
+        return aStr
+    else:
+        reverseString(aStr[0:-1]) + aStr
 
 #
 # Problem 4: X-ian
