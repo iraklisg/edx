@@ -13,7 +13,7 @@ def reverseString(aStr):
     if len(aStr) < 2:
         return aStr
     else:
-        return reverseString(aStr[1:]) + aStr
+        return reverseString(aStr[1:]) + aStr[0]
 
 aStr = 'abcd'
 print reverseString(aStr)
