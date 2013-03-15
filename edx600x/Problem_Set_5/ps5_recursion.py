@@ -42,6 +42,14 @@ def x_ian(x, word):
     returns: True if word is x_ian, False otherwise
     """
     ###TODO.
+    if len(x) < 2:
+        return x in word
+    elif len(x) >=2 and x[0] in word: 
+        j = word.index(x[0])
+        return x_ian(x[1:], word[j+1:])
+    else:
+        return False
+
 
 #
 # Problem 5: Typewriter
@@ -58,3 +66,22 @@ def insertNewlines(text, lineLength):
     returns: a string, with newline characters inserted appropriately. 
     """
     ### TODO.
+        #BASE CASE: If the length of the text is smaller of the lineLength, return the text
+    if len(text) <= lineLength:
+        return text
+    #RECURSIVE CASE: If the length of the text is bigger than the linelength I should reduce the size of the text to fit lineLength
+    elif len(text) > lineLength:
+        #If the lineLength-th element is " "
+        if text[lineLength-1] == " ":
+            # concatenate the text up to and including the lineLength-th element with \n and with the the result of the recursive call of the rest of the text text[lineLegth :]
+            return text[:lineLength] + '\n' + insertNewlines(text[lineLength:], lineLength)
+        # Else, if the lineLength-th element != " ", i.e. i'm on the midle of a word
+        else:
+            # Try to find the index of the space character that follows that lineLength-th element 
+            j = text[lineLength:].find(" ")
+            # If there is no space, means I reached the end of string, so I return the whole text
+            if j == -1: #means there are no extra spaces, so text is the final remaining string
+                return text
+            # else I concatenate the text up to this point (lineLength+j) with /n and the result of the recursive call with the remaining string
+            else:             
+                return text[:(lineLength+j)] + '\n' + insertNewlines(text[lineLength+j+1:], lineLength)
