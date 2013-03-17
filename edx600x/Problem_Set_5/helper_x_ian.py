@@ -15,9 +15,10 @@ def x_ian(x, word):
 #        return x_ian(x[1:], word[j+1:])
 #    else:
 #        return False
-
+    #BASE CASE: x is of length 0 or 1, return true/false according to if x is in word
     if len(x) < 2:
         return x in word
+    #RECURSIVE CASE: x is 
     elif len(x) >=2 and x[0] in word: 
         j = word.index(x[0])
         return x_ian(x[1:], word[j+1:])
