@@ -11,11 +11,15 @@ def findAll(wordList, lStr):
     newList = []
     for word in wordList:
         flag = True
-#        print 'now I am checking word "%s"'%(word)
+        print '================now I am checking word "%s"'%(word)
+        lista = list(lStr)
         for letter in word:
 #            print 'now I am checking letter "%s" of word "%s"'%(letter, word)
-            if letter not in lStr:
-#                print 'letter "%s" not in "%s"'%(letter, lStr)
+            if letter in lista:
+                lista.remove(letter)
+                print 'remove %s from %s'%(letter,lista)
+            else:
+                print '!!!!!  letter "%s" not in "%s"'%(letter, lStr)
                 flag = False
                 break
 #        print 'flag = ',flag
@@ -28,8 +32,7 @@ def findAll(wordList, lStr):
 
 
 
-wordList = ['nick', 'mitsos', 'ira', 'panos']
+wordList = ['nick', 'mitsos', 'irra', 'panos']
 lStr = 'irapson'
 print findAll(wordList, lStr)
-                
-    
+
