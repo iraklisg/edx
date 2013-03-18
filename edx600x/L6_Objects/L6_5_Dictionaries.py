@@ -23,3 +23,5 @@ animals['d'] = 'donkey'
 del animals['b']
 print animals
 print animals.values()
+animals['d'] = 'donkeyyyyy'
+print animals.get('e','lala')
