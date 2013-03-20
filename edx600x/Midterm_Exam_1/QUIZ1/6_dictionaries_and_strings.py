@@ -24,4 +24,4 @@ print 'd2 =',d2
 print addUp(d2)
 print 'd1 due to alliasing =',d1
 print f('', {})
-print result # name error because "result" is not defined!!!
+#print result # name error because "result" is not defined!!!
