@@ -23,7 +23,7 @@ class Clock3(object):
     def __init__(self, time):
         self.time = time
     def print_time(self):
-        print self.time
+        print self.time 
 
 boston_clock = Clock3('5:30')
 paris_clock = boston_clock # boston_clock and paris_clock are two names for the same object. This is called aliasing!!!
