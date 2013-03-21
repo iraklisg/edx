@@ -45,6 +45,6 @@ import copy
 p1 = Point()
 p1.x = 3.0
 p1.y = 4.0
-p2 = copy.copy(p1) # now p1 and p2 contain the same data BUT they are different objects
+p2 = copy.copy(p1) # now p1 and p2 contain the same data BUT they are different objects:)
 print p1 is p2 #False
 print p1 == p2 #False
