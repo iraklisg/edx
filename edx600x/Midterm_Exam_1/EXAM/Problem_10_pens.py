@@ -8,31 +8,31 @@ def numPens(n):
     """
     # Your Code Here
     # 5a+8b+24c=n
-#    range_c = n/24+1
-#    range_b = n/8+1
-#    range_a = n/5+1
-#    for c in range(range_c):
-#        for b in range(range_b):
-#            for a in range(range_a):
-#                res = 5*a + 8*b + 24*c
-#                print 'a = %s , b = %s, c = %s , res = %s'%(a,b,c,res)
-#                if res == n:
-#                    return True
-#                elif res > n:
-#                    print ' ==== start over ===='
-#                    break
-#    return False
+    range_c = n/24+1
+    range_b = n/8+1
+    range_a = n/5+1
+    for c in range(range_c):
+        for b in range(range_b):
+            for a in range(range_a):
+                res = 5*a + 8*b + 24*c
+                print 'a = %s , b = %s, c = %s , res = %s'%(a,b,c,res)
+                if res == n:
+                    return True
+                elif res > n:
+                    print ' ==== start over ===='
+                    break
+    return False
     # empneusi!!!!
-    a = 5
-    b = 8
-    c = 24
-    ans = 1
-    for i in itertools.permutations([c,b,a],3):
-        print '%d _mod_ %s = %s'%(n, i[0], n%i[0])
-        print '%d _mod_ %s = %s'%(n%i[0], i[1], n%i[1])
-        print '%d _mod_ %s = %s'%(n%i[1], i[2], n%i[2])
-        ans *= ((n%i[0])%i[1])%i[2]
-        print ans 
+#    a = 5
+#    b = 8
+#    c = 24
+#    ans = 1
+#    for i in itertools.permutations([c,b,a],3):
+#        print '%d _mod_ %s = %s'%(n, i[0], n%i[0])
+#        print '%d _mod_ %s = %s'%(n%i[0], i[1], n%i[1])
+#        print '%d _mod_ %s = %s'%(n%i[1], i[2], n%i[2])
+#        ans *= ((n%i[0])%i[1])%i[2]
+#        print ans 
 
 #    #calculate mods
 #    aa = n%a
