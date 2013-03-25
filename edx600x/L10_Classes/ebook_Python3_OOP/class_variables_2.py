@@ -24,11 +24,13 @@ print(theExample.itsProblem)
 print (Example3.itsProblem)  # But be careful with this one, as theExample.itsProblem is automatically set
                             # to be equal to Example.itsProblem, but is not the same variable at all and
                             # can be changed independently.
-
+print 'Hey, ',theExample.itsProblem is Example3.itsProblem # why does not return False ?????????
 # You'll notice we first set a class variable, then we access an object variable (theExample.itsProblem).
 # We never set this object variable but it works, how is that possible?
 # Well, Python tries to get first the object variable, but if he can't find it, will give you the class variable.
 # Warning: the class variable is shared among instances, and the object variable is not.
+
+#  Note that an object variable with the same name as a class variable will hide the class variable! 
 
 class Example4(object):
     pass

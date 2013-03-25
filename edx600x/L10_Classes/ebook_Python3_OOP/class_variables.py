@@ -20,9 +20,7 @@ class Contact(object):
         # you will actually be creating a new instance variable on the object;
         # the class variable will still be unchanged and accessible as Contact.all_contacts.
     def set_class_var(self, name):
-        Contact.all_contacts = name #if you ever set the variable using self.all_contacts,
-        # you will actually be creating a new instance variable on the object;
-        # the class variable will still be unchanged and accessible as Contact.all_contacts.
+        Contact.all_contacts = name
 
 nick = Contact('Nikos','nick@gmail.com')
 mitsos = Contact('Mitsos','mitsos@gmail.com')
@@ -30,7 +28,7 @@ ira = Contact('Iraklis','ira@gmail.com')
 
 print nick.email
 print nick # ovewritten by __str__
-print Contact.all_contacts
+print Contact.all_contacts 
 print 'Ah-ha !! ',nick.print_all() # Now that I have NOT set an instance var all_contacts, it prints out the class variable (Contact.all_contacts) value
 print '============= SET INSTANCE VAR ==========='
 nick.set_instance_var('Nikolaras') # Here I set the variable using self.all_contacts
