@@ -57,24 +57,24 @@ def gradeReport(course):
             report.append(str(s) + ' has no grades')
     return '\n'.join(report)
 
-ug1 = UG('Jane Doe', 2014)
-ug2 = UG('John Doe', 2015)
-ug3 = UG('David Henry', 2003)
-g1 = Grad('Billy Buckner')
-g2 = Grad('Bucky F. Dent')
+#ug1 = UG('Jane Doe', 2014)
+#ug2 = UG('John Doe', 2015)
+#ug3 = UG('David Henry', 2003)
+#g1 = Grad('Billy Buckner')
+#g2 = Grad('Bucky F. Dent')
 
-six00 = Grades()
-six00.addStudent(g1)
-six00.addStudent(ug2)
-six00.addStudent(ug1)
-six00.addStudent(g2)
-
-for s in six00.allStudents():
-    six00.addGrade(s, 75)
-six00.addGrade(g1, 25)
-six00.addGrade(g2, 100)
-
-six00.addStudent(ug3)
+#six00 = Grades()
+#six00.addStudent(g1)
+#six00.addStudent(ug2)
+#six00.addStudent(ug1)
+#six00.addStudent(g2)
+#
+#for s in six00.allStudents():
+#    six00.addGrade(s, 75)
+#six00.addGrade(g1, 25)
+#six00.addGrade(g2, 100)
+#
+#six00.addStudent(ug3)
 
 # print gradeReport(six00)
 
