@@ -30,3 +30,5 @@ animals['d'].append('dog')
 animals['d'].append('dingo')
 
 print biggest(animals)
+
+print animals
