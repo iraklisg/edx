@@ -12,14 +12,14 @@ class Mortgage(object):
         self.rate = annRate/12.0
         self.months = months
         self.paid = [0.0]
-        self.owed = [loan]
-        self.payment = findPayment(loan, self.rate, months)
+        self.owed = [loan] # the principal amount of loan currently outstanding 
+        self.payment = findPayment(loan, self.rate, months) # calculates the precomputed monthly payment
         self.legend = None #description of mortgage
 
     def makePayment(self):
         """Make a payment"""
         self.paid.append(self.payment)
-        reduction = self.payment - self.owed[-1]*self.rate
+        reduction = self.payment - self.owed[-1]*self.rate # self.owed is the principal amount of loan currently outstanding 
         self.owed.append(self.owed[-1] - reduction)
 
     def getTotalPaid(self):
@@ -41,7 +41,7 @@ class FixedWithPts(Fixed):
     def __init__(self, loan, r, months, pts):
         Fixed.__init__(self, loan, r, months)
         self.pts = pts
-        self.paid = [loan*(pts/100.0)]
+        self.paid = [loan*(pts/100.0)] #now we prepaid some of the loan
         self.legend += ', ' + str(pts) + ' points'
 
 # mortgage that changes interest rate after 48 months
@@ -56,12 +56,12 @@ class TwoRate(Mortgage):
             + ' months, then ' + str(r*100) + '%'
 
     def makePayment(self):
-        if len(self.paid) == self.teaserMonths + 1:
+        if len(self.paid) == self.teaserMonths + 1: # when we exceed the Teaser months then I calculate based on next rate
             self.rate = self.nextRate
             self.payment = findPayment(self.owed[-1], self.rate,
                                        self.months - \
                                        self.teaserMonths)
-        Mortgage.makePayment(self)
+        Mortgage.makePayment(self) #
 
 
 # helper function to try out alternatives
