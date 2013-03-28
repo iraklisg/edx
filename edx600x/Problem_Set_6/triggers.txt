@@ -4,13 +4,13 @@
 # Problem 11: 
 
 # subject trigger named t1
-t1 SUBJECT world
+t1 SUBJECT Adam
 
 # title trigger named t2
-t2 TITLE Intel
+t2 TITLE Cyprus
 
 # phrase trigger named t3
-t3 PHRASE New York City
+t3 PHRASE outside a Coop bank
 
 # composite trigger named t4
 t4 AND t2 t3

@@ -47,6 +47,34 @@ def process(url):
 # Problem 1
 
 # TODO: NewsStory
+class NewsStory(object):
+    '''
+    A general class
+    
+    '''
+    def __init__(self, guid, title, subject, summary, link):
+        assert type(guid) and type(title) and type(subject) and type(summary) and type(link) == str
+        self.guid = guid
+        self.title = title
+        self.subject = subject
+        self.summary = summary
+        self.link = link
+        
+    def getGuid(self):
+        return self.guid
+    
+    def getTitle(self):
+        return self.title
+        
+    def getSubject(self):
+        return self.subject
+        
+    def getSummary(self):
+        return self.summary
+        
+    def getLink(self):
+        return self.link
+        
 
 #======================
 # Part 2
@@ -65,24 +93,101 @@ class Trigger(object):
 # Problems 2-5
 
 # TODO: WordTrigger
+class WordTrigger(Trigger):
+    '''
+    '''
+    def __init__(self, word):
+        assert type(word) == str
+        self.word = word.lower()
+        
+    def isWordIn(self,text):
+        '''takes in one string argument text.
+        It returns True if the whole word word is present in text, False otherwise.
+        This method should not be case-sensitive.
+        
+        ''' 
+        text = text.lower()
+        assert type(text) == str
+        for punct in string.punctuation: # replace successively every punctuation in string.punctuation with a " "
+            text = text.replace(punct, ' ')
+        text_list = [e for e in text.split(' ') if len(e) > 0] # Get rid of elements with zero length (double spaces)
+        return self.word in text_list # True/False
 
 # TODO: TitleTrigger
+class TitleTrigger(WordTrigger):
+    '''fires when a news item's title contains a given word'''
+    def evaluate(self, news_story_object):
+        assert type(news_story_object) == NewsStory
+        return self.isWordIn(news_story_object.getTitle())
+    
 # TODO: SubjectTrigger
+class SubjectTrigger(WordTrigger):
+    def evaluate(self, news_story_object):
+        assert type(news_story_object) == NewsStory
+        return self.isWordIn(news_story_object.getSubject())
+    
 # TODO: SummaryTrigger
+class SummaryTrigger(WordTrigger):
+    def evaluate(self, news_story_object):
+        assert type(news_story_object) == NewsStory
+        return self.isWordIn(news_story_object.getSummary())
+    
 
 
 # Composite Triggers
 # Problems 6-8
 
 # TODO: NotTrigger
+class NotTrigger(Trigger):
+    '''
+    This trigger should produce its output by inverting the output of another trigger.
+    The NOT trigger should take this other trigger as an argument to its constructor
+    (why its constructor? Because we can't change what parameters evaluate takes in...that'd break our polymorphism).
+    So, given a trigger T and a news item x,
+    the output of the NOT trigger's evaluate method should be equivalent to not T.evaluate(x).
+    
+    '''
+    def __init__(self,trigger):
+#        assert isinstance(trigger, Trigger)
+        self.trigger = trigger
+    
+    def evaluate(self, news_story_object):
+        assert isinstance(news_story_object, NewsStory)
+        return not self.trigger.evaluate(news_story_object)
+
 # TODO: AndTrigger
+class AndTrigger(Trigger):
+    def __init__(self,trigger1, trigger2):
+        self.trigger1 = trigger1
+        self.trigger2 = trigger2
+        
+    def evaluate(self, news_story_object):
+        assert isinstance(news_story_object, NewsStory)
+        return self.trigger1.evaluate(news_story_object) and self.trigger2.evaluate(news_story_object)
 # TODO: OrTrigger
+class OrTrigger(Trigger):
+    def __init__(self,trigger1, trigger2):
+        self.trigger1 = trigger1
+        self.trigger2 = trigger2
+        
+    def evaluate(self, news_story_object):
+        assert isinstance(news_story_object, NewsStory)
+        return self.trigger1.evaluate(news_story_object) or self.trigger2.evaluate(news_story_object)
 
 
 # Phrase Trigger
 # Question 9
 
 # TODO: PhraseTrigger
+class PhraseTrigger(Trigger):
+    '''  fires when a given phrase is in any of the story's subject, title, or summary '''
+    def __init__(self, phrase):
+        assert type(phrase) == str
+        self.phrase = phrase
+    
+    def evaluate(self, news_story_object):
+        return self.phrase in news_story_object.getSubject() or self.phrase in news_story_object.getTitle() or self.phrase in news_story_object.getSummary()
+        
 
 
 #======================
@@ -97,7 +202,15 @@ def filterStories(stories, triggerlist):
     Returns: a list of only the stories for which a trigger in triggerlist fires.
     """
     # TODO: Problem 10
-    # This is a placeholder (we're just returning all the stories, with no filtering) 
+    # This is a placeholder (we're just returning all the stories, with no filtering)
+    triggered_stories = []
+    for story in stories:
+        for trigger in triggerlist:
+            if trigger.evaluate(story) == True:
+                triggered_stories.append(story)
+                break
+        
+    stories = triggered_stories
     return stories
 
 #======================
@@ -121,7 +234,23 @@ def makeTrigger(triggerMap, triggerType, params, name):
     Returns a new instance of a trigger (ex: TitleTrigger, AndTrigger).
     """
     # TODO: Problem 11
-
+    if triggerType == 'TITLE':
+        triggerMap[name] = TitleTrigger("".join(params))
+    elif triggerType == 'SUBJECT':
+        triggerMap[name] = SubjectTrigger("".join(params))
+    elif triggerType == 'SUMMARY':
+        triggerMap[name] = SummaryTrigger("".join(params))
+    elif triggerType == 'NOT':
+        triggerMap[name] = NotTrigger(triggerMap["".join(params)])
+    elif triggerType == 'AND':
+        triggerMap[name] = AndTrigger(triggerMap["".join(params[0])], triggerMap["".join(params[1])])
+    elif triggerType == 'OR':
+        triggerMap[name] = OrTrigger(triggerMap["".join(params[0])], triggerMap["".join(params[1])])
+    elif triggerType == 'PHRASE':
+        triggerMap[name] = PhraseTrigger(" ".join(params))
+#    else: raise ValueError('not correct type of trigger')
+    
+    return triggerMap[name]
 
 def readTriggerConfig(filename):
     """
@@ -152,7 +281,7 @@ def readTriggerConfig(filename):
 
         # Making a new trigger
         if linesplit[0] != "ADD":
-            trigger = makeTrigger(triggerMap, linesplit[1],
+            trigger = makeTrigger(triggerMap, linesplit[1], #(triggerMap, triggerType, params, name)
                                   linesplit[2:], linesplit[0])
 
         # Add the triggers to the list
@@ -180,7 +309,7 @@ def main_thread(master):
         
         # TODO: Problem 11
         # After implementing makeTrigger, uncomment the line below:
-        # triggerlist = readTriggerConfig("triggers.txt")
+        triggerlist = readTriggerConfig("triggers.txt")
 
         # **** from here down is about drawing ****
         frame = Frame(master)
