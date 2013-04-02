@@ -8,6 +8,7 @@ pylab.savefig('Figure-Eric') #save figure 2
 pylab.figure(1) #go back to working on figure 1
 pylab.plot([5,6,10,3]) #draw again on figure 1
 pylab.savefig('Figure-Grimson') #save figure 1
+pylab.show()
 
 
 
