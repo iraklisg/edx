@@ -17,16 +17,16 @@ def findPayment(loan, r, m):
     loan at a monthly rate of r for m months"""
     return loan*((r*(1+r)**m)/((1+r)**m - 1))
 
-class MortgagePlots(object):
-    
-    def plotPayments(self, style):
-        pylab.plot(self.paid[1:], style, label = self.legend)
-        
-    def plotTotPd(self, style):
-        totPd = [self.paid[0]]
-        for i in range(1, len(self.paid)):
-            totPd.append(totPd[-1] + self.paid[i])
-        pylab.plot(totPd, style, label = self.legend)
+#class MortgagePlots(object):
+#    
+#    def plotPayments(self, style):
+#        pylab.plot(self.paid[1:], style, label = self.legend)
+#        
+#    def plotTotPd(self, style):
+#        totPd = [self.paid[0]]
+#        for i in range(1, len(self.paid)):
+#            totPd.append(totPd[-1] + self.paid[i])
+#        pylab.plot(totPd, style, label = self.legend)
 
 
 class Mortgage(MortgagePlots, object):
@@ -89,16 +89,16 @@ class TwoRate(Mortgage):
         Mortgage.makePayment(self)
 
 
-#class MortgagePlots(object):
-#    
-#    def plotPayments(self, style):
-#        pylab.plot(self.paid[1:], style, label = self.legend)
-#        
-#    def plotTotPd(self, style):
-#        totPd = [self.paid[0]]
-#        for i in range(1, len(self.paid)):
-#            totPd.append(totPd[-1] + self.paid[i])
-#        pylab.plot(totPd, style, label = self.legend)
+class MortgagePlots(object):
+    
+    def plotPayments(self, style):
+        pylab.plot(self.paid[1:], style, label = self.legend)
+        
+    def plotTotPd(self, style):
+        totPd = [self.paid[0]]
+        for i in range(1, len(self.paid)):
+            totPd.append(totPd[-1] + self.paid[i])
+        pylab.plot(totPd, style, label = self.legend)
 
 
 def plotMortgages(morts, amt):
