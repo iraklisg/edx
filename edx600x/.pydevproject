@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?eclipse-pydev version="1.0"?><pydev_project>
+<pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
+<path>/edx600x</path>
+<path>/edx600x/L7_Debugging</path>
+<path>/edx600x/L8_Complexity_of_algorithms</path>
+<path>/edx600x/Problem_Set_4</path>
+<path>/edx600x/L9_Searching_and_Sorting</path>
+<path>/edx600x/Problem_Set_5</path>
+<path>/edx600x/Midterm_Exam_1</path>
+<path>/edx600x/L10_Classes</path>
+<path>/edx600x/Problem_Set_6</path>
+<path>/edx600x/L13_Simulations_and_Random_Walks</path>
+<path>/edx600x/Problem_Set_7</path>
+</pydev_pathproperty>
+<pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">python 2.7</pydev_property>
+<pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">Default</pydev_property>
+</pydev_project>
