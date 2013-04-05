@@ -249,7 +249,7 @@ class StandardRobot(Robot):
             
 
 # Uncomment this line to see your implementation of StandardRobot in action!
-testRobotMovement(StandardRobot, RectangularRoom)
+#testRobotMovement(StandardRobot, RectangularRoom)
 
 
 # === Problem 3
@@ -271,25 +271,26 @@ def runSimulation(num_robots, speed, width, height, min_coverage, num_trials,
     robot_type: class of robot to be instantiated (e.g. StandardRobot or
                 RandomWalkRobot)
     """
-
+#    anim = ps7_visualize.RobotVisualization(num_robots, width, height)
     time_steps = []
     for trials in range(num_trials):
-        clean_tiles = 0 # initial all room surface is dirty
         time_step = 0
         # Initialize room
         room = RectangularRoom(width, height)
         #initialize robot given room and speed
         robots = [robot_type(room, speed) for robot in range(num_robots)]
         while room.getNumCleanedTiles() / float(room.getNumTiles()) < min_coverage:
+#            anim.update(room, robots)
             for robot in robots:
                 robot.updatePositionAndClean()
-                clean_tiles += room.getNumCleanedTiles()
             time_step += 1
             if room.getNumCleanedTiles() / float(room.getNumTiles()) == min_coverage: # in case of min_coverage = 100%
                 break
         time_steps.append(time_step)
+#    anim.done()
     return sum(time_steps) / float(len(time_steps))
         
+runSimulation(10, 1.0, 20, 20, 0.5, 30, StandardRobot)
 
 # === Problem 4
 class RandomWalkRobot(Robot):
@@ -304,8 +305,20 @@ class RandomWalkRobot(Robot):
         Move the robot to a new position and mark the tile it is on as having
         been cleaned.
         """
-        raise NotImplementedError
+        current_position = self.getRobotPosition()
+        new_direction = random.randint(0,360-1)
+        self.setRobotDirection(new_direction)
+        new_position = current_position.getNewPosition(new_direction, self.robot_speed)
+#        self.setRobotPosition(new_position)
+#        self.robot_room.cleanTileAtPosition(self.getRobotPosition())
+        if self.robot_room.isPositionInRoom(new_position):# and self.robot_room.isTileCleaned(self.robot_position.x, self.robot_position.y):
+                    self.setRobotPosition(new_position)
+                    self.robot_room.cleanTileAtPosition(new_position)
+        # Else change direction
+        else:
+            self.setRobotDirection(new_direction)
 
+testRobotMovement(RandomWalkRobot, RectangularRoom)
 
 def showPlot1(title, x_label, y_label):
     """
