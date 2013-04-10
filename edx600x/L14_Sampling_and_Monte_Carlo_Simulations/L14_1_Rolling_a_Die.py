@@ -39,3 +39,12 @@ def atLeastOneOne(numRolls, numTrials):
     print fracSuccess
 
 atLeastOneOne(10, 1000)
+
+import itertools
+
+count = 0
+for i in itertools.combinations_with_replacement('RRRGGG', 3):
+    print i
+    count += 1
+    
+print count
