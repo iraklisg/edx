@@ -245,11 +245,45 @@ class StandardRobot(Robot):
         # Else change direction
         else:
             self.setRobotDirection(random.randint(0,360-1))
+
+class NikolarasRobot(Robot):
+    """
+    A StandardRobot is a Robot with the standard movement strategy.
+
+    At each time-step, a StandardRobot attempts to move in its current
+    direction; when it would hit a wall, it *instead* chooses a new direction
+    randomly.
+    """
+    def updatePositionAndClean(self):
+        """
+        Simulate the raise passage of a single time-step.
+
+        Move the robot to a new position and mark the tile it is on as having
+        been cleaned.
+        """
+        current_position = self.getRobotPosition()
+        current_direction = self.getRobotDirection()
+        
+        new_position = current_position.getNewPosition(current_direction, self.robot_speed)
+#        self.setRobotPosition(new_position)
+#        self.robot_room.cleanTileAtPosition(self.getRobotPosition())
+        if self.robot_room.isPositionInRoom(new_position):# and self.robot_room.isTileCleaned(self.robot_position.x, self.robot_position.y):
+                    self.setRobotPosition(new_position)
+                    self.robot_room.cleanTileAtPosition(new_position)
+        # Else change direction
+        else:
+            alt_position = current_position.getNewPosition(180, self.robot_speed)
+            if self.robot_room.isPositionInRoom(alt_position):# and self.robot_room.isTileCleaned(self.robot_position.x, self.robot_position.y):
+                    self.setRobotPosition(alt_position)
+                    self.robot_room.cleanTileAtPosition(alt_position)
+            else:
+                self.setRobotDirection(random.randint(0,365-1))
+            
             
             
 
 # Uncomment this line to see your implementation of StandardRobot in action!
-#testRobotMovement(StandardRobot, RectangularRoom)
+#testRobotMovement(NikolarasRobot, RectangularRoom)
 
 
 # === Problem 3
@@ -271,7 +305,7 @@ def runSimulation(num_robots, speed, width, height, min_coverage, num_trials,
     robot_type: class of robot to be instantiated (e.g. StandardRobot or
                 RandomWalkRobot)
     """
-#    anim = ps7_visualize.RobotVisualization(num_robots, width, height)
+    anim = ps7_visualize.RobotVisualization(num_robots, width, height)
     time_steps = []
     for trials in range(num_trials):
         time_step = 0
@@ -280,17 +314,17 @@ def runSimulation(num_robots, speed, width, height, min_coverage, num_trials,
         #initialize robot given room and speed
         robots = [robot_type(room, speed) for robot in range(num_robots)]
         while room.getNumCleanedTiles() / float(room.getNumTiles()) < min_coverage:
-#            anim.update(room, robots)
+            anim.update(room, robots)
             for robot in robots:
                 robot.updatePositionAndClean()
             time_step += 1
             if room.getNumCleanedTiles() / float(room.getNumTiles()) == min_coverage: # in case of min_coverage = 100%
                 break
         time_steps.append(time_step)
-#    anim.done()
+    anim.done()
     return sum(time_steps) / float(len(time_steps))
         
-runSimulation(10, 1.0, 20, 20, 0.5, 30, StandardRobot)
+runSimulation(2, 1.0, 10, 10, 1, 20, StandardRobot)
 
 # === Problem 4
 class RandomWalkRobot(Robot):
@@ -318,7 +352,7 @@ class RandomWalkRobot(Robot):
         else:
             self.setRobotDirection(new_direction)
 
-testRobotMovement(RandomWalkRobot, RectangularRoom)
+#testRobotMovement(RandomWalkRobot, RectangularRoom)
 
 def showPlot1(title, x_label, y_label):
     """
@@ -327,18 +361,22 @@ def showPlot1(title, x_label, y_label):
     num_robot_range = range(1, 11)
     times1 = []
     times2 = []
+    times3 = []
     for num_robots in num_robot_range:
         print "Plotting", num_robots, "robots..."
-        times1.append(runSimulation(num_robots, 1.0, 20, 20, 0.8, 20, StandardRobot))
-        times2.append(runSimulation(num_robots, 1.0, 20, 20, 0.8, 20, RandomWalkRobot))
+        times1.append(runSimulation(num_robots, 1.0, 20, 20, 0.2, 20, StandardRobot))
+        times2.append(runSimulation(num_robots, 1.0, 20, 20, 0.2, 20, RandomWalkRobot))
+        times3.append(runSimulation(num_robots, 1.0, 20, 20, 0.2, 20, NikolarasRobot))#
     pylab.plot(num_robot_range, times1)
     pylab.plot(num_robot_range, times2)
+    pylab.plot(num_robot_range, times3)
     pylab.title(title)
     pylab.legend(('StandardRobot', 'RandomWalkRobot'))
     pylab.xlabel(x_label)
     pylab.ylabel(y_label)
     pylab.show()
 
+#showPlot1("title", "x_label", "y_label")
     
 def showPlot2(title, x_label, y_label):
     """
@@ -360,7 +398,8 @@ def showPlot2(title, x_label, y_label):
     pylab.xlabel(x_label)
     pylab.ylabel(y_label)
     pylab.show()
-    
+
+#showPlot2("title", "x_label", "y_label")    
 
 # === Problem 5
 #
