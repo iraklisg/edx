@@ -25,15 +25,15 @@ def flipPlot(minExp, maxExp):
     ratios = []
     diffs = []
     xAxis = []
-    for exp in range(minExp, maxExp + 1):
+    for exp in range(minExp, maxExp + 1): #built the x-axis with number of flips form 2**minExp to 2**maxExp
         xAxis.append(2**exp)
-    for numFlips in xAxis:
+    for numFlips in xAxis: # for every different num of flips
         numHeads = 0
-        for n in range(numFlips):
+        for n in range(numFlips): # for that particular num of flips
             if random.random() < 0.5:
-                numHeads += 1
+                numHeads += 1 # calculate the number of Heads
         numTails = numFlips - numHeads
-        ratios.append(numHeads/float(numTails))
+        ratios.append(numHeads/float(numTails)) # then calculate the ratio between Heads/Tails occurences
         diffs.append(abs(numHeads - numTails))
     pylab.title('Difference Between Heads and Tails')
     pylab.xlabel('Number of Flips')
