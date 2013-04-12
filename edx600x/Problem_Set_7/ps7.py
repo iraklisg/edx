@@ -81,6 +81,10 @@ class RectangularRoom(object):
         self.height = height
         #initialize a room of w * h tiles, which are NOT cleaned yet
         self.room = {(x,y):0 for x in range(width) for y in range(height)} # if :value = 0 then tile is NOT cleaned
+#        room = {}
+#        for x in range(w):
+#            for y in range(h):
+#                room[(x, y)] = 'vromiko'
         
     def cleanTileAtPosition(self, pos):
         """
@@ -105,7 +109,7 @@ class RectangularRoom(object):
         n: an integer
         returns: True if (m, n) is cleaned, False otherwise
         """
-        if self.room.get((m, n)) == 0: return False
+        if self.room.get((m, n)) == 0: return False # d.get(key) --> value
         else: return True 
     
     def getNumTiles(self):
