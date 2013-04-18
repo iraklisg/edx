@@ -34,3 +34,9 @@ print l, m
 k = (l+m)/2.0
 print k
 print k[2]
+
+d = {'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4}
+
+
+if d['be'] == 3:
+    print d.get('a',0)
