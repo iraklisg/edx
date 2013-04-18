@@ -18,3 +18,6 @@ class Foo(object):
 
 o = Foo()
 print o
+a = Foo
+print a
+

@@ -89,10 +89,11 @@ class SimpleVirus(object):
         NoChildException if this virus particle does not reproduce.               
         
         """
-        p = self.getMaxBirthProb * (1 - popDensity)
-        if random.random() <= p:
-            return SimpleVirus(self.maxBirthProb, self.clearProb)
-        else: NoChildException()
+        p_virus_reproduced = self.getMaxBirthProb() * (1 - popDensity) # the probability of a virus to be reproduced.
+        if random.random() <= p_virus_reproduced:
+            return SimpleVirus(self.getMaxBirthProb(), self.getClearProb())
+        else:
+            raise NoChildException
             
 
 
@@ -112,32 +113,32 @@ class Patient(object):
         SimpleVirus instances)
 
         maxPop: the maximum virus population for this patient (an integer)
+        
         """
-
-        # TODO
+        self.viruses = viruses
+        self.maxPop = maxPop
 
     def getViruses(self):
         """
         Returns the viruses in this Patient.
+        
         """
-        # TODO
-
+        return self.viruses
 
     def getMaxPop(self):
         """
         Returns the max population.
+        
         """
-        # TODO
-
+        return self.maxPop
 
     def getTotalPop(self):
         """
         Gets the size of the current total virus population. 
         returns: The total virus population (an integer)
+        
         """
-
-        # TODO        
-
+        return len(self.viruses)
 
     def update(self):
         """
@@ -156,10 +157,29 @@ class Patient(object):
 
         returns: The total virus population at the end of the update (an
         integer)
+        
         """
-
-        # TODO
-
+        viruses_copy = self.viruses[:] #create a copy of viruses list
+        for virus_particle in viruses_copy:
+            if virus_particle.doesClear(): #if True, i.e a virus particle has been cleared (prob. 100*clearProb %)
+                self.viruses.remove(virus_particle) # update viruses list by removing virus particles that have been not cleared
+        
+        # calculate the uncleared viruses  population density given current viruses population and max viruses population 
+        current_viruses_population = self.getTotalPop()
+        max_viruses_population = self.getMaxPop()
+        viruses_population_density = current_viruses_population / float(max_viruses_population) # is the popDensity argument of the SimpleVirus.reproduce() method
+        
+        
+        viruses_copy = self.viruses[:] #create a new copy of viruses list
+        for virus_particle in viruses_copy: # for the remaining particles of virus
+            # try to breed an offspring; reproduction is Based on the value of population density 
+            try: # see if a particle will breed offsprings (prob. of breeding an offspring is self.getMaxBirthProb * (1 - popDensity)
+                self.viruses.append(virus_particle.reproduce(viruses_population_density)) # if no NoChildException exception is raised from reproduce() do the append
+            except NoChildException:
+                pass
+        
+        return self.getTotalPop()
+                
 
 
 #
@@ -403,3 +423,11 @@ def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
     """
 
     # TODO
+    
+#################### TESTS
+v1 = SimpleVirus(1.0, 0.0)
+print v1.doesClear()
+print v1.reproduce(0.2)
+virus = SimpleVirus(1.0, 0.0)
+patient = Patient([virus], 100)
+print patient.update()
