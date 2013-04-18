@@ -35,29 +35,38 @@ class SimpleVirus(object):
         maxBirthProb: Maximum reproduction probability (a float between 0-1)        
         clearProb: Maximum clearance probability (a float between 0-1).
         """
+        self.maxBirthProb = maxBirthProb
+        self.clearProb = clearProb
 
-        # TODO
 
     def getMaxBirthProb(self):
         """
         Returns the max birth probability.
+        
         """
-        # TODO
+        return self.maxBirthProb
 
     def getClearProb(self):
         """
         Returns the clear probability.
+        
         """
-        # TODO
+        return self.clearProb
 
     def doesClear(self):
         """ Stochastically determines whether this virus particle is cleared from the
         patient's body at a time step. 
         returns: True with probability self.getClearProb and otherwise returns
         False.
+        
         """
-
-        # TODO
+        # I want the function doesClear to return True with probability self.getClearProb i.e 1 out of self.getClearProb times
+        # random() return a numbers 'k' between 0 to 1 with equal probability (uniform distributed)
+        # Therefore, if I run random 1,000,000 times, it will give me numbers <0.4 400,000 times
+        # i.e the returned numbers will occur 40/100 times, that is with probability 0.4
+        k = random.random() # generate a random number k between 0 - 1 with equal probability
+        if k <= self.getClearProb(): return True # if that number k is less or equal to self.getClearProb() return True
+        else: return False
 
     
     def reproduce(self, popDensity):
@@ -78,9 +87,13 @@ class SimpleVirus(object):
         offspring of this virus particle. The child should have the same
         maxBirthProb and clearProb values as this virus. Raises a
         NoChildException if this virus particle does not reproduce.               
+        
         """
-
-        # TODO
+        p = self.getMaxBirthProb * (1 - popDensity)
+        if random.random() <= p:
+            return SimpleVirus(self.maxBirthProb, self.clearProb)
+        else: NoChildException()
+            
 
 
 
