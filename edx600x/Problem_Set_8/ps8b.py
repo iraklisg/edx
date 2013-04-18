@@ -3,6 +3,7 @@
 import numpy
 import random
 import pylab
+from ps8b_precompiled_27 import *  
 
 ''' 
 Begin helper code
@@ -199,11 +200,63 @@ def simulationWithoutDrug(numViruses, maxPop, maxBirthProb, clearProb,
     maxBirthProb: Maximum reproduction probability (a float between 0-1)        
     clearProb: Maximum clearance probability (a float between 0-1)
     numTrials: number of simulation runs to execute (an integer)
+    
     """
+    viruses = [SimpleVirus(maxBirthProb, clearProb) for i in xrange(numViruses)] # initialize a list of 100 viruses
+    arostiaris = Patient(viruses, maxPop) #initialize a patient
+    
+    number_of_steps = 300
+    timesteps = [t for t in range(number_of_steps)] # this will be my x-axis
+    accu_virus_populations = [0 for i in timesteps] # initialize an array with #timesteps=300 zeros
+    
+    for trial in xrange(numTrials):
+        for timestep in timesteps:
+            current_population = arostiaris.update()
+            accu_virus_populations[timestep] += current_population #appends the population for every time step
+            
+    average_viruses_population = [p/float(numTrials) for p in accu_virus_populations]
+    # PLOTTING
+    pylab.figure(1)
+    pylab.plot(timesteps, average_viruses_population, 'ro', label='SimpleVirus particles population')
+    pylab.xlabel('Number of time steps')
+    pylab.ylabel('Average size of the SimpleVirus particles population')
+    pylab.title('Changes to the virus population for 300 time steps')
+    pylab.legend()
+#     pylab.show()
+def simulationWithoutDrugNick(numViruses, maxPop, maxBirthProb, clearProb,
+                          numTrials):
+    """
+    Run the simulation and plot the graph for problem 3 (no drugs are used,
+    viruses do not have any drug resistance).    
+    For each of numTrials trial, instantiates a patient, runs a simulation
+    for 300 timesteps, and plots the average virus population size as a
+    function of time.
 
-    # TODO
-
-
+    numViruses: number of SimpleVirus to create for patient (an integer)
+    maxPop: maximum virus population for patient (an integer)
+    maxBirthProb: Maximum reproduction probability (a float between 0-1)        
+    clearProb: Maximum clearance probability (a float between 0-1)
+    numTrials: number of simulation runs to execute (an integer)
+    """
+    #Instantiate the viruses first, the patient second
+    viruses= [ SimpleVirus(maxBirthProb, clearProb) for i in range(numViruses) ]
+    patient = Patient(viruses, maxPop)
+    #Execute the patient.update method 300 times for 100 trials
+    steps = 300
+    countList = [0 for i in range(300)]
+    for trial in range(numTrials):
+        for timeStep in range(steps):
+            countList[timeStep] += patient.update()
+    avgList = [ countList[i]/float(numTrials) for i in range(steps) ]
+    #Plot a diagram with xAxis=timeSteps, yAxis=average virus population
+    xAxis = [ x for x in range(steps) ]
+    pylab.figure(2)
+    pylab.plot(xAxis, avgList, 'ro', label='Simple Virus')
+    pylab.xlabel('Number of elapsed time steps')
+    pylab.ylabel('Average size of the virus population')
+    pylab.title('Virus growth in a patient without the aid of any drag')
+    pylab.legend()
+    pylab.show()
 
 #
 # PROBLEM 4
@@ -425,9 +478,11 @@ def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
     # TODO
     
 #################### TESTS
-v1 = SimpleVirus(1.0, 0.0)
-print v1.doesClear()
-print v1.reproduce(0.2)
 virus = SimpleVirus(1.0, 0.0)
 patient = Patient([virus], 100)
 print patient.update()
+
+random.seed(0)
+simulationWithoutDrug(numViruses = 100, maxPop = 1000, maxBirthProb = 0.1, clearProb = 0.05, numTrials = 100)
+# random.seed(0)
+# simulationWithoutDrugNick(numViruses = 100, maxPop = 1000, maxBirthProb = 0.1, clearProb = 0.05, numTrials = 100)

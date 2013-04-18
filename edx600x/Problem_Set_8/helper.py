@@ -21,3 +21,16 @@ print o
 a = Foo
 print a
 
+class Foo(object):
+    pass
+
+print [Foo() for i in xrange(4)]
+
+import pylab
+
+l = pylab.array([1, 2, 3])
+m = pylab.array([10, 20, 30])
+print l, m
+k = (l+m)/2.0
+print k
+print k[2]
