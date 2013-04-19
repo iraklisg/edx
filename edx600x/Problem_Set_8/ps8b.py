@@ -413,9 +413,9 @@ class TreatedPatient(Patient):
         virus instances)
 
         maxPop: The  maximum virus population for this patient (an integer)
+        
         """
-
-        # TODO
+        Patient.__init__(self, viruses, maxPop)
 
 
     def addPrescription(self, newDrug):
