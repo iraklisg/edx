@@ -40,4 +40,4 @@ def clearSim(n, clearProb, steps):
 ##pylab.xlabel('Number of Steps')
 ##pylab.ylabel('Number of Molecules')
 ##pylab.legend()
-##pylab.show()
+##pylab.show()               
