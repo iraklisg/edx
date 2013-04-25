@@ -15,7 +15,7 @@ def throwNeedles(numNeedles):
         y = random.random()
         if (x*x + y*y)**0.5 <= 1.0:
             inCircle += 1
-    return 2*(inCircle/float(Needles))
+    return 4*(inCircle/float(Needles))
 
 def estPi(precision = 0.01, numTrials = 20):
     numNeedles = 1000
