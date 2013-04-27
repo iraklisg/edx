@@ -28,4 +28,7 @@ pylab.hist(y, bins=100)
 # how many bins for hist?
 pylab.figure("how many bins?")
 pylab.hist(x, bins=10)
-pylab.show()
+#pylab.show()
+
+
+            
