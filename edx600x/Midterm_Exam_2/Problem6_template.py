@@ -55,7 +55,7 @@ def foxGrowth():
             if random.random() <= 1/3.0: # with probability 1/3
                 CURRENTFOXPOP += 1 # gives birth to a new little fox
         else: # if the fox does not succeed in hunting
-            if random.random() <= 1/10.0 and CURRENTFOXPOP > 10: # with probability 1/10, she dies given that there always are at least 10 foxes in the forest
+            if random.random() <= 9/10.0 and CURRENTFOXPOP > 10: # with probability 1/10, she dies given that there always are at least 10 foxes in the forest
                 CURRENTFOXPOP -=1 # poor fox
             
 def runSimulation(numSteps):
@@ -81,13 +81,13 @@ def runSimulation(numSteps):
         
 (r, f) = runSimulation(200)
 pylab.figure(1)
-pylab.plot(r, 'bo')
-pylab.plot(f, 'ro')
+pylab.plot(r, 'b.')
+pylab.plot(f, 'r.')
 #coeff = pylab.polyfit(range(len(r)), r, 2)
 #trend = pylab.polyval(coeff, range(len(r)))
 x_vals = pylab.array(range(len(r)))
 a, b, c = pylab.polyfit(x_vals, r, 2)
-est_yvals = a*x_vals**2 + b*x_vals
-pylab.plot(est_yvals, 'b.')
+est_yvals = a*x_vals**2 + b*x_vals + c
+pylab.plot(est_yvals, 'b-')
 
 pylab.show()
