@@ -1,5 +1,12 @@
 from itertools import *
-from L18_3_The_Greedy_Algorithm.py import *
+
+def buildItems():
+    return [Item(n,v,w) for n,v,w in (('clock', 175, 10),
+                                      ('painting', 90, 9),
+                                      ('radio', 20, 4),
+                                      ('vase', 50, 2),
+                                      ('book', 10, 1),
+                                      ('computer', 200, 20))]
 
 def allCombos(items):
     # Your code here
