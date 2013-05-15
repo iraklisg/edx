@@ -1,12 +1,10 @@
 from itertools import *
 
-
-
 def dec2ternary(num):
     result = ''
     while num > 0:
-        result = str(num%3)+result
-        num = num/3
+        result = str(num%3)+result # append the LSB
+        num = num/3 # short right by one ternary bit
     return list(result)
 
 print dec2ternary(7)

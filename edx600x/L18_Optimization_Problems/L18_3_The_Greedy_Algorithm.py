@@ -1,5 +1,3 @@
-from L18_3_The_Greedy_Algorithm.py import *
-
 def buildItems():
     return [Item(n,v,w) for n,v,w in (('clock', 175, 10),
                                       ('painting', 90, 9),

@@ -1,4 +1,5 @@
 from itertools import *
+from L18_3_The_Greedy_Algorithm.py import *
 
 def allCombos(items):
     # Your code here
@@ -82,8 +83,11 @@ def timeChooseBest(n,ntrials=10):
     print 'Average running time was',sum(times)/ntrials,'seconds.'
 
 ########tests
-for i in powerSet(['a', 'b', 'c']):
-    print (i)
+# for i in powerSet(['a', 'b', 'c']):
+#     print (i)
+# 
+# for i in powerset():
+#     print i
 
-for i in powerset():
-    print i
+timeChooseBest(14)
+timeChooseBest(15)
