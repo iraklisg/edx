@@ -1,4 +1,4 @@
-from graph import *
+from L19_2_Graph_Implementation import *
 
 def DFS(graph, start, end, path = [], shortest = None):
     #assumes graph is a Digraph
