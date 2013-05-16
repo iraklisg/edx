@@ -45,7 +45,7 @@ class Trigger(object):
 # Whole Word Triggers
 # Problems 2-5
 
-# TODO: WordTrigger
+
 class WordTrigger(Trigger):
     '''
     '''
@@ -72,20 +72,20 @@ class WordTrigger(Trigger):
     def dummy(self):
         return self.word in self.word
 
-# TODO: TitleTrigger
+
 class TitleTrigger(WordTrigger):
     '''fires when a news item's title contains a given word'''
     def evaluate(self, news_story_object):
 #        assert type(news_story_object) == NewsStory
         return self.isWordIn(news_story_object.getTitle())
     
-# TODO: SubjectTrigger
+
 class SubjectTrigger(WordTrigger):
     def evaluate(self, news_story_object):
 #        assert type(news_story_object) == NewsStory
         return self.isWordIn(news_story_object.getSubject())
     
-# TODO: SummaryTrigger
+
 class SummaryTrigger(WordTrigger):
     def evaluate(self, news_story_object):
 #        assert type(news_story_object) == NewsStory

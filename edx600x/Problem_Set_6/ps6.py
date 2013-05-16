@@ -46,7 +46,7 @@ def process(url):
 
 # Problem 1
 
-# TODO: NewsStory
+
 class NewsStory(object):
     '''
     A general class
@@ -92,7 +92,7 @@ class Trigger(object):
 # Whole Word Triggers
 # Problems 2-5
 
-# TODO: WordTrigger
+
 class WordTrigger(Trigger):
     '''
     '''
@@ -113,20 +113,20 @@ class WordTrigger(Trigger):
         text_list = [e for e in text.split(' ') if len(e) > 0] # Get rid of elements with zero length (double spaces)
         return self.word in text_list # True/False
 
-# TODO: TitleTrigger
+
 class TitleTrigger(WordTrigger):
     '''fires when a news item's title contains a given word'''
     def evaluate(self, news_story_object):
         assert type(news_story_object) == NewsStory
         return self.isWordIn(news_story_object.getTitle())
     
-# TODO: SubjectTrigger
+
 class SubjectTrigger(WordTrigger):
     def evaluate(self, news_story_object):
         assert type(news_story_object) == NewsStory
         return self.isWordIn(news_story_object.getSubject())
     
-# TODO: SummaryTrigger
+
 class SummaryTrigger(WordTrigger):
     def evaluate(self, news_story_object):
         assert type(news_story_object) == NewsStory
@@ -137,7 +137,7 @@ class SummaryTrigger(WordTrigger):
 # Composite Triggers
 # Problems 6-8
 
-# TODO: NotTrigger
+
 class NotTrigger(Trigger):
     '''
     This trigger should produce its output by inverting the output of another trigger.
@@ -155,7 +155,7 @@ class NotTrigger(Trigger):
         assert isinstance(news_story_object, NewsStory)
         return not self.trigger.evaluate(news_story_object)
 
-# TODO: AndTrigger
+
 class AndTrigger(Trigger):
     def __init__(self,trigger1, trigger2):
         self.trigger1 = trigger1
@@ -164,7 +164,7 @@ class AndTrigger(Trigger):
     def evaluate(self, news_story_object):
         assert isinstance(news_story_object, NewsStory)
         return self.trigger1.evaluate(news_story_object) and self.trigger2.evaluate(news_story_object)
-# TODO: OrTrigger
+
 class OrTrigger(Trigger):
     def __init__(self,trigger1, trigger2):
         self.trigger1 = trigger1
@@ -178,7 +178,7 @@ class OrTrigger(Trigger):
 # Phrase Trigger
 # Question 9
 
-# TODO: PhraseTrigger
+
 class PhraseTrigger(Trigger):
     '''  fires when a given phrase is in any of the story's subject, title, or summary '''
     def __init__(self, phrase):
@@ -201,7 +201,7 @@ def filterStories(stories, triggerlist):
 
     Returns: a list of only the stories for which a trigger in triggerlist fires.
     """
-    # TODO: Problem 10
+
     # This is a placeholder (we're just returning all the stories, with no filtering)
     triggered_stories = []
     for story in stories:
@@ -233,7 +233,7 @@ def makeTrigger(triggerMap, triggerType, params, name):
 
     Returns a new instance of a trigger (ex: TitleTrigger, AndTrigger).
     """
-    # TODO: Problem 11
+
     if triggerType == 'TITLE':
         triggerMap[name] = TitleTrigger("".join(params))
     elif triggerType == 'SUBJECT':
@@ -307,7 +307,7 @@ def main_thread(master):
         t4 = OrTrigger(t2, t3)
         triggerlist = [t1, t4]
         
-        # TODO: Problem 11
+
         # After implementing makeTrigger, uncomment the line below:
         triggerlist = readTriggerConfig("triggers.txt")
 
