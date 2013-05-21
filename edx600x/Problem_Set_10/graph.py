@@ -17,10 +17,10 @@ class Node(object):
         return self.name == other.name
     def __ne__(self, other):
         return not self.__eq__(other)
-    def __hash__(self):
-        # Override the default hash method
-        # Think: Why would we want to do this?
-        return self.name.__hash__()
+#     def __hash__(self):
+#         # Override the default hash method
+#         # Think: Why would we want to do this?
+#         return self.name.__hash__()
 
 class Edge(object):
     def __init__(self, src, dest):
@@ -32,6 +32,14 @@ class Edge(object):
         return self.dest
     def __str__(self):
         return '{0}->{1}'.format(self.src, self.dest)
+    
+class WeightedEdge(Edge):
+    def __init__(self, src, dest, tot_dist, out_dist):
+        Edge.__init__(self, src, dest)
+        self.tot_dist = tot_dist
+        self.out_dist = out_dist
+    def __str__(self):
+        return '{0}->{1} ({2}, {3})'.format(self.src, self.dest, self.tot_dist, self.out_dist)
 
 class Digraph(object):
     """
@@ -68,3 +76,17 @@ class Digraph(object):
             for d in self.edges[str(k)]:
                 res = '{0}{1}->{2}\n'.format(res, k, d)
         return res[:-1]
+    
+class WeightedDigraph(Digraph):
+    def __str__(self):
+        res = ''
+        for k in self.edges:
+            for d in self.edges[str(k)]:
+                res = '{0}{1}->{2}\n'.format(res, k, d)
+
+
+na = Node('a')
+print na
+# print hash(a)
+d = {na:32}
+print d[na]

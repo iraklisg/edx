@@ -1,5 +1,5 @@
-'''
-Created on May 20, 2013
+# set
+l = [1, 2, 3, 2]
 
-@author: ira
-'''
+print l
+print set(l)
