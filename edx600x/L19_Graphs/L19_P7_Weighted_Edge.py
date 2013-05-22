@@ -1,3 +1,5 @@
+from L19_2_Graph_Implementation import *
+
 class WeightedEdge(Edge):
     def __init__(self, src, dest, weight):
         self.src = src
