@@ -9,11 +9,13 @@ class Node(object):
     def __init__(self, name):
         self.name = str(name)
 
-#     def __eq__(self, other):
-#         return self.name == other.name
+    def __eq__(self, other):
+        return self.name == other.name
 
-    def __hash__(self):
-        return self.name.__hash__()
+#     def __hash__(self):
+#         return self.name.__hash__()
+
+
 
 a = Node(1)
 print '12 a =', a.name
@@ -38,3 +40,25 @@ print '27', a.name in {b.name:[]}
 # 3) you will see difference
 # 4) comment out __eq__ method and run the code
 # 5) you will see difference 
+
+## difference between type() and isinstance() 
+class bNode(Node):
+    pass
+c = bNode('b')
+print type(a) == type(b)
+print type(c) == Node
+print type(c) == bNode
+print isinstance(c, Node)
+
+## 
+print "-------------------------------------------"
+d = {'a':[['b', (1,2)], ['c', (3,4)]], 'd':[['c', (66,77)]]}
+
+for src in d: #return a list of keys (sources)
+    for dest in d[str(src)]: # return all destinations for each of the sources
+#         print src, dest
+        print '%s->%s (%.2f, %.2f)'%(src, dest[0], dest[1][0], dest[1][1])
+    
+    
+    
+    
