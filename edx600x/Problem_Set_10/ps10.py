@@ -37,7 +37,38 @@ def load_map(mapFilename):
     """
     # TODO
     print "Loading map from file..."
+    f = open(mapFilename, 'r')
+    # f.readline() reads a single line from the file; a newline character (\n) is
+    # left at the end of the string, and is only omitted on the last line of the
+    # file if the file doesn't end in a newline. This makes the return value unambiguous
+    # if f.readline() returns an empty string, the end of the file has been reached,
+    # while a blank line is represented by '\n', a string containing only a single newline.
     
+    # Initialize a weighted digraph
+    g = WeightedDigraph()
+    all_data = []
+    # READ ALL DATA FROM FILE
+    # create a list of all data [[src, dest, w1, w2],[src, dest, w1, w2],[src, dest, w1, w2], ...]
+    # ADD NODES (src and dest) in graph, if they do not exist already
+    line = None # initialize line
+    while True:
+        line = f.readline()
+        if line == '': #until the end of the file is reached, i.e. until line is an empty string
+            break
+        data = string.split(line)
+        all_data.append(data)
+        # if both src and dest nodes do not exist in graph yet (otherwise it raises an error)
+        # ADD NODE
+        if not g.hasNode(Node(data[0])):
+            g.addNode(Node(data[0])) # add source node
+        if not g.hasNode(Node(data[1])):
+            g.addNode(Node(data[1])) # add destination node
+    f.close() # close the file since all data is stored in all_data list variable
+    # For every sublist in all_data that contains info for an edge
+    # ADD EDGE and the corresponding info to graph
+    for edge in all_data:
+        g.addEdge(WeightedEdge(Node(edge[0]),Node(edge[1]),float(edge[2]),float(edge[3])))
+    return g
         
 
 #
@@ -50,7 +81,7 @@ def load_map(mapFilename):
 def bruteForceSearch(digraph, start, end, maxTotalDist, maxDistOutdoors):    
     """
     Finds the shortest path from start to end using brute-force approach.
-    The total distance travelled on the path must not exceed maxTotalDist, and
+    The total distance traveled on the path must not exceed maxTotalDist, and
     the distance spent outdoor on this path must not exceed maxDistOutdoors.
 
     Parameters: 
@@ -72,7 +103,11 @@ def bruteForceSearch(digraph, start, end, maxTotalDist, maxDistOutdoors):
         maxDistOutdoors constraints, then raises a ValueError.
     """
     #TODO
-    pass
+    #consider first finding all valid paths that satisfy the max distance outdoors constraint,
+    #and then going through those paths and returning the shortest, rather than trying to
+    #fulfill both constraints at once.
+    path = [start] # initialize the starting path
+    
 
 #
 # Problem 4: Finding the Shorest Path using Optimized Search Method
@@ -107,13 +142,14 @@ def directedDFS(digraph, start, end, maxTotalDist, maxDistOutdoors):
 
 # Uncomment below when ready to test
 #### NOTE! These tests may take a few minutes to run!! ####
-# if __name__ == '__main__':
+if __name__ == '__main__':
 #     Test cases
-#     mitMap = load_map("mit_map.txt")
-#     print isinstance(mitMap, Digraph)
-#     print isinstance(mitMap, WeightedDigraph)
-#     print 'nodes', mitMap.nodes
-#     print 'edges', mitMap.edges
+    mitMap = load_map("mit_map.txt")
+    print mitMap
+    print isinstance(mitMap, Digraph)
+    print isinstance(mitMap, WeightedDigraph)
+    print 'nodes', mitMap.nodes
+    print 'edges', mitMap.edges
 
 
 #     LARGE_DIST = 1000000

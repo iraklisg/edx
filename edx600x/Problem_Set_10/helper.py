@@ -64,7 +64,7 @@ for src in d: #return a list of keys (sources)
 print '~~~~~~~~~~ Read from file ~~~~~~~~~~~'
 import string # split()
 from graph import * 
-f = open('test_mit_map.txt', 'r')
+f = open('mit_map.txt', 'r')
 # f.readline() reads a single line from the file; a newline character (\n) is
 # left at the end of the string, and is only omitted on the last line of the
 # file if the file doesn't end in a newline. This makes the return value unambiguous
@@ -74,27 +74,26 @@ f = open('test_mit_map.txt', 'r')
 # Initialize a weighted digraph
 g = WeightedDigraph()
 all_data = []
+# read all data from file
+# create a list of all data [[src, dest, w1, w2],[src, dest, w1, w2],[src, dest, w1, w2], ...]
+# add src and dest nodes in graph, if they do not exist already
 line = None # initialize line
-# print line
 while True:
     line = f.readline()
     if line == '': #until the end of the file is reached, i.e. until line is an empty string
         break
     data = string.split(line)
     all_data.append(data)
-#     print line
-#     print data
-    if g.hasNode(Node(data[0])):
-        print str(data[0])+'Existed'
-    else:
-        g.addNode(Node(data[0]))
-print g.nodes
-print all_data
-
+    # if both src and dest nodes do not exist in graph yet (otherwise it raises an error)
+    if not g.hasNode(Node(data[0])):
+        g.addNode(Node(data[0])) # add source node
+    if not g.hasNode(Node(data[1])):
+        g.addNode(Node(data[1])) # add destination node
+f.close()
+# For every sublist that contains info for an edge
+# add edge and the corresponding info to graph
 for edge in all_data:
-    print edge
     g.addEdge(WeightedEdge(Node(edge[0]),Node(edge[1]),float(edge[2]),float(edge[3])))
-print g.edges
 print g
     
 
