@@ -60,5 +60,59 @@ for src in d: #return a list of keys (sources)
         print '%s->%s (%.2f, %.2f)'%(src, dest[0], dest[1][0], dest[1][1])
     
     
+# read from file
+print '~~~~~~~~~~ Read from file ~~~~~~~~~~~'
+import string # split()
+from graph import * 
+f = open('test_mit_map.txt', 'r')
+# f.readline() reads a single line from the file; a newline character (\n) is
+# left at the end of the string, and is only omitted on the last line of the
+# file if the file doesn't end in a newline. This makes the return value unambiguous
+# if f.readline() returns an empty string, the end of the file has been reached,
+# while a blank line is represented by '\n', a string containing only a single newline.
+
+# Initialize a weighted digraph
+g = WeightedDigraph()
+all_data = []
+line = None # initialize line
+# print line
+while True:
+    line = f.readline()
+    if line == '': #until the end of the file is reached, i.e. until line is an empty string
+        break
+    data = string.split(line)
+    all_data.append(data)
+#     print line
+#     print data
+    if g.hasNode(Node(data[0])):
+        print str(data[0])+'Existed'
+    else:
+        g.addNode(Node(data[0]))
+print g.nodes
+print all_data
+
+for edge in all_data:
+    print edge
+    g.addEdge(WeightedEdge(Node(edge[0]),Node(edge[1]),float(edge[2]),float(edge[3])))
+print g.edges
+print g
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     

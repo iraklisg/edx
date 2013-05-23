@@ -37,6 +37,7 @@ def load_map(mapFilename):
     """
     # TODO
     print "Loading map from file..."
+    
         
 
 #
