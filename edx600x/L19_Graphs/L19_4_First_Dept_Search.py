@@ -1,6 +1,6 @@
 from L19_2_Graph_Implementation import *
 
-# Create GRAPH
+# Create GRAPH 
 nodes = []
 # Create all nodes and add them to the list above
 nodes.append(Node("ABC")) # nodes[0]
