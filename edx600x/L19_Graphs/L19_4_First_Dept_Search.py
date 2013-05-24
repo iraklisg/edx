@@ -6,6 +6,7 @@ def DFS(graph, start, end, path = [], shortest = None):
     path = path + [start]
     print 'Current dfs path:', printPath(path)
     if start == end:
+        print path
         return path
     for node in graph.childrenOf(start):
         print node
@@ -14,6 +15,20 @@ def DFS(graph, start, end, path = [], shortest = None):
             newPath = DFS(graph,node,end,path,shortest) 
             if newPath != None:
                 return newPath
+
+def find_all_paths(graph, start, end, path=[]):
+    path = path + [start]
+    if start == end:
+        print path           
+        return [path]
+    paths = []
+    for node in graph.childrenOf(start):
+        if node not in path:
+            newpaths = find_all_paths(graph, node, end, path)
+            for newpath in newpaths:
+                paths.append(newpath)
+    return paths
+
 ################
 nodes = []
 # Create all nodes and add them to the list above
@@ -35,7 +50,8 @@ g.addEdge(Edge(nodes[3],nodes[5]))
 g.addEdge(Edge(nodes[4],nodes[5]))
 
 DFS(g, nodes[0], nodes[5], path = [], shortest = None)
-
+l = find_all_paths(g, nodes[0], nodes[5], path = [])
+printPath(l) 
 
 def testSP():
     nodes = []
