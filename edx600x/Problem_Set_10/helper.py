@@ -97,14 +97,31 @@ for edge in all_data:
 print g
     
 
+print '~~~~~~~~~ Generators ~~~~~~~~~~~~~~~'
 
+def gen(a, b):
+    c = a + b
+    yield c
+    
+def gen_list(a, b):
+    c = [a , b]
+    yield c
 
+res = gen(3, 2)
+res_list = gen_list(3, 2)
 
+print '01. ',res
+print '01. ',res_list
 
+for i in res:
+    print  '02. ',i
 
+for j in res_list:
+    print  '02. ',j
 
-
-
+print '~~~~~~~~~ flatten list of lists of lists etc ~~~~~~~~~~~~~~~'
+l = [[[2, 4]]]
+print list(flatten(l))
 
 
 
