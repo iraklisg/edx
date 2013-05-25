@@ -119,10 +119,9 @@ for i in res:
 for j in res_list:
     print  '02. ',j
 
-print '~~~~~~~~~ flatten list of lists of lists etc ~~~~~~~~~~~~~~~'
-l = [[[2, 4]]]
-print list(flatten(l))
-
+print '~~~~~~~~~ min len list of lists of lists etc ~~~~~~~~~~~~~~~'
+l = [[3, 4, 7],[2, 4]]
+print min(l, key=len)
 
 
 

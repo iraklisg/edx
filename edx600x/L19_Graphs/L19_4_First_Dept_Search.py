@@ -59,16 +59,17 @@ def find_all_paths(graph, start, end, path=[]):
 #     print 'Current dfs path:', printPath(path)
     print '01. path = ',path #TP01
     if start == end:         
-        return path
+        return [path]
+#         return path
     paths = [] # initialize list of all possible paths
     for node in graph.childrenOf(start):
         if node not in path:
             # recursive case: the first node of children nodes becomes the start node each time
             new_path = find_all_paths(graph, node, end, path)
             print '02. new_path = ',new_path #TP02
-            paths.append(new_path)
-#             for i in new_path: # in order to flatten newpath list []
-#                 paths.append(i)
+#             paths.append(new_path)
+            for i in new_path: # in order to flatten newpath list []
+                paths.append(i)
     # now return from recursive case when all nodes in graph.childrenOf(start) have been examined
     print '03. paths = ',paths #TP03
     return paths
@@ -81,7 +82,7 @@ def find_all_paths(graph, start, end, path=[]):
     
 all_paths = find_all_paths(g, nodes[0], nodes[5], path = [])
 for path in all_paths:
-    print printPath(path)
+    print '------->  ',printPath(path)
 
 ##########################
 
