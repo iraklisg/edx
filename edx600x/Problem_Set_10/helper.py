@@ -123,9 +123,14 @@ print '~~~~~~~~~ min len list of lists of lists etc ~~~~~~~~~~~~~~~'
 l = [[3, 4, 7],[2, 4]]
 print min(l, key=len)
 
-
-
-
+print '~~~~~~~~~ for / continue ~~~~~~~~~~~~~~~'
+lis = [1, 2, 3, 4, 5, 6]
+res = []
+for i in lis:
+    if i%2 == 0 or i <= 3: # discard zygous arithmous
+        continue
+    res.append(i)
+print res
 
 
 
