@@ -217,27 +217,27 @@ def bruteForceSearch(digraph, start, end, maxTotalDist, maxDistOutdoors):
 #
 
 # helper function
-def opt_all_DFS(graph, start, end, maxTotalDist, maxDistOutdoors, path=None):
-    if path == None: path = []
+def opt_all_DFS(graph, start, end, maxTotalDist, maxDistOutdoors, path=[]):
     #assumes graph is a Digraph
     #assumes start and end are nodes in graph
     path = path + [start]
 #     print 'Current dfs path:', printPath(path)
-#     print '01. path = ',path #TP01
+#     print '01. path = '+str(path)+' len tot = '+str(path_total_distance(graph, path))+' len out = '+str(path_outdoor_distance(graph, path)) #TP01
     if start == end:         
         return [path]
 #         return path
     paths = [] # initialize list of all possible paths
     for node in graph.childrenOf(start):
         #~~~~~~~~~~~~~ optimization ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        if path_total_distance(graph, path) > float(maxTotalDist) or \
-            path_outdoor_distance(graph,path) > float(maxDistOutdoors): # if maxTotalDist is reached so far
+#         print '----OPTIMISATION path = '+str(path)+' len tot = '+str(path_total_distance(graph, path))+' len out = '+str(path_outdoor_distance(graph, path)) #TP01
+        if path_total_distance(graph, path+[node]) > float(maxTotalDist) or \
+            path_outdoor_distance(graph,path+[node]) > float(maxDistOutdoors): # if maxTotalDist is reached so far
             continue # continue with the next node
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``
         if node not in path:
             # recursive case: the first node of children nodes becomes the start node each time
             new_path = opt_all_DFS(graph, node, end, maxTotalDist, maxDistOutdoors, path)
-#             print '02. new_path = ',new_path #TP02
+#             print '============= 02. new_path = '+str(new_path)
 #             paths.append(new_path)
 #             if len(new_path)
             for p in new_path: # in order to flatten newpath list []
@@ -245,7 +245,7 @@ def opt_all_DFS(graph, start, end, maxTotalDist, maxDistOutdoors, path=None):
 #                 print '-----------------%f %f'%(path_outdoor_distance(graph, p),float(maxDistOutdoors))
                 paths.append(p)
     # now return from recursive case when all nodes in graph.childrenOf(start) have been examined
-#     print '03. paths = ',paths #TP03
+#     print ' @@@@@@@@@@@@@@ 03. paths = ',paths #TP03
     return paths
 
 def directedDFS(digraph, start, end, maxTotalDist, maxDistOutdoors):
@@ -253,7 +253,7 @@ def directedDFS(digraph, start, end, maxTotalDist, maxDistOutdoors):
     Finds the shortest path from start to end using directed depth-first.
     search approach. The total distance travelled on the path must not
     exceed maxTotalDist, and the distance spent outdoor on this path must
-	not exceed maxDistOutdoors.
+    not exceed maxDistOutdoors.
 
     Parameters: 
         digraph: instance of class Digraph or its subclass
@@ -277,12 +277,14 @@ def directedDFS(digraph, start, end, maxTotalDist, maxDistOutdoors):
     #Find ALL possible paths from start to end w/ constrains of maxTotalDist and, maxDistOutdoors
     start = Node(start)
     end = Node(end)
-    all_paths = opt_all_DFS(digraph, start, end, maxTotalDist, maxDistOutdoors)
+    all_paths = opt_all_DFS(digraph, start, end, maxTotalDist, maxDistOutdoors, path=[])
+#     print 'ALL PATHS = ',all_paths
     if len(all_paths) == 0: raise ValueError
     
     best_path = None # initialize the best path found so far
     best_dist = maxTotalDist # initialize the shortest distance so far as the max allowed dist
     for path in all_paths:
+#         print 'PATH = ',path
         tot_dist = path_total_distance(digraph, path)
         if tot_dist <= best_dist:
             # update the shortest distance and best path found so far
