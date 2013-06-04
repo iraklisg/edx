@@ -26,4 +26,4 @@ def recur1(num, arr = []):
     else:
         return recur1(num-1, [num] + arr) # concatenate arr+num
 
-print recur(3)
+print recur1(3)
