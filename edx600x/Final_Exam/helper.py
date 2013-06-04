@@ -14,3 +14,16 @@ print recur(6, 5)
 
 for i in range(1, 10+1, 3):
     print i
+
+# XOR
+print set([1,2,3,8,9]) ^ set([4,7,2,1,3])
+
+#recursion with list
+def recur1(num, arr = []):
+    
+    if num == 0:
+        return arr
+    else:
+        return recur1(num-1, [num] + arr) # concatenate arr+num
+
+print recur(3)
