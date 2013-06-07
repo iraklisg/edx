@@ -116,150 +116,81 @@ class Family(object):
         child_node = self.names_to_nodes[kid]
         return mom_node.is_child(child_node)
 
-#     def cousin(self, a, b, cousin_type = 0, degree_removed = 0):
-#         """
-#         Returns a tuple of (the cousin type, degree removed) 
-# 
-#         cousin type is an integer that is -1 if a and b
-#         are the same node or if one is the direct descendent 
-#         of the other.  Otherwise, cousin type is 0 or greater,
-#         representing the shorter distance to their common 
-#         ancestor as described in 5-2.
-# 
-#         degree removed is the distance to the common ancestor
-# 
-#         Keyword arguments: 
-#         a -- string that is the name of a
-#         b -- string that is the name of b
-#         """
-#         
-#         ## YOUR CODE HERE ####
-#         # assume that both a and b are in names_to_nodes; else KeyError
-#         node_a = self.names_to_nodes[a]
-#         node_b = self.names_to_nodes[b]
-#         # if a and b are the same node or if one is the direct descendent of the other
-#         if node_a == node_b:
-#             return (-1, 0)
-#         
-#         # ======== wrapper function ==============    
-#         def find_ancestors(node, ancestors = []):
-#             ''' 
-#             returns a list of all ancestors of a node (included)
-#             up to the root node
-#             
-#             '''
-#             # BASE CASE:
-#             if node == None: # when hit the root node, whose parent is None
-#                 return ancestors # return the list of ancestors
-#             # RECURSIVE CASE
-#             else: # while node is not the root node
-#                 ancestors = [node] + ancestors # add this node to the ancestors list
-#                 return find_ancestors(node.get_parent(), ancestors) # recursively repeat for the parent of this node, given the ancestors list so far
-#         # ========================================
-#           
-#         # ======== wrapper function ==============    
-#         def find_common_ancestor(n1, n2, ancest1 = [], ancest2 = []):
-#             # BASE CASEs: if the parents of the node are the same, return the parent
-#             if n1 == n2: #means that n1 n2 was of the sane degree and reached at the same time recursively the common parent
-#                 return n1 # I may return n1.get_parrent() if I consider the parent node to be the common ancestor
-#             elif n1 in ancest2: # n1 is lower than n2 in tree
-#                 return n1
-#             elif n2 in ancest1: # n2 is lower than n1 in tree
-#                 return n2
-#             # RECURSIVE CASE
-#             else:
-#                 # keep track of ancestors of n1 and n2
-#                 ancest1 = [n1] + ancest1 
-#                 ancest2 = [n2] + ancest2
-#                 print 'n1 = {} in ancest2 = {} and n2 = {} in ancest1 = {}'.format(n1, ancest2, n2, ancest1)
-#                 return find_common_ancestor(n1.get_parent(), n2.get_parent(), ancest1, ancest2)
-#         # ========================================  
-# #         print find_common_ancestor(node_a, node_b) 
-#             
-#         
-#         
-#         
-#         def find_depth(node, depth = -2):
-#             if node == None:
-#                 return depth
-#             else:
-# #                 print 'current parent = {}'.format(node.get_parent())
-# #                 print 'current depth = {}'.format(depth)
-#                 return find_depth(node.get_parent(), depth+1)
-# 
-#         return 1, 2
-    def cousin(self, a, b):
+    def cousin(self, a, b, cousin_type = 0, degree_removed = 0):
         """
-        Returns a tuple of (the cousin type, degree removed)
-
+        Returns a tuple of (the cousin type, degree removed) 
+ 
         cousin type is an integer that is -1 if a and b
-        are the same node or if one is the direct descendent
+        are the same node or if one is the direct descendent 
         of the other.  Otherwise, cousin type is 0 or greater,
-        representing the shorter distance to their common
+        representing the shorter distance to their common 
         ancestor as described in 5-2.
-
+ 
         degree removed is the distance to the common ancestor
-
-        Keyword arguments:
+ 
+        Keyword arguments: 
         a -- string that is the name of a
         b -- string that is the name of b
         """
+         
+        ## YOUR CODE HERE ####
+        # assume that both a and b are in names_to_nodes; else KeyError
         node_a = self.names_to_nodes[a]
         node_b = self.names_to_nodes[b]
         # if a and b are the same node or if one is the direct descendent of the other
         if node_a == node_b:
             return (-1, 0)
-        elif (node_a.is_parent(node_b) or node_b.is_parent(node_a)):
-            return (-1, 1)
-        
-        
-        def find_depth(one, depth = -2):
-            if one == None:
+         
+        # ======== wrapper function ==============    
+        def find_ancestors(node, ancestors = []):
+            ''' 
+            returns a list of all ancestors of a node (included)
+            up to the root node
+             
+            '''
+            # BASE CASE:
+            if node == None: # when hit the root node, whose parent is None
+                return ancestors # return the list of ancestors
+            # RECURSIVE CASE
+            else: # while node is not the root node
+                ancestors = [node] + ancestors # add this node to the ancestors list
+                return find_ancestors(node.get_parent(), ancestors) # recursively repeat for the parent of this node, given the ancestors list so far
+        # ========================================
+           
+        # ======== wrapper function ==============    
+        def find_common_ancestor(n1, n2, ancest1 = [], ancest2 = [], count = 0):
+            # BASE CASEs: if the parents of the node are the same, return the parent
+            if n1 == n2: #means that n1 n2 was of the sane degree and reached at the same time recursively the common parent
+                return n1 # I may return n1.get_parrent() if I consider the parent node to be the common ancestor
+            elif n1 in ancest2: # n1 is lower than n2 in tree
+                return n1
+            elif n2 in ancest1: # n2 is lower than n1 in tree
+                return n2
+            # RECURSIVE CASE
+            else:
+                # keep track of ancestors of n1 and n2
+                ancest1 = [n1] + ancest1 
+                ancest2 = [n2] + ancest2
+                print 'n1 = {} in ancest2 = {} and n2 = {} in ancest1 = {}    count = {}'.format(n1, ancest2, n2, ancest1, count)
+                return find_common_ancestor(n1.get_parent(), n2.get_parent(), ancest1, ancest2, count+1)
+        # ========================================  
+        print find_common_ancestor(node_a, node_b) 
+             
+         
+         
+        # ======== wrapper function ==============     
+        def find_depth(node, depth = -2):
+            if node == None:
                 return depth
             else:
-                return find_depth(one.get_parent(), depth+1)
+#                 print 'current parent = {}'.format(node.get_parent())
+#                 print 'current depth = {}'.format(depth)
+                return find_depth(node.get_parent(), depth+1)
+        # ========================================  
         
-        depth_node_a = find_depth(node_a)
-##        print 'final depth for', str(node_a), '=', depth_node_a
+        return 1, 2
 
-        depth_node_b = find_depth(node_b)
-##        print 'final depth for', str(node_b), '=', depth_node_b
-
-        counter_a, counter_b = False, False
-        if depth_node_b > depth_node_a:
-            counter_b == 0
-            while node_b != node_a:
-                counter_b += 1
-                node_b = node_b.get_parent()
-                if node_b is None:
-                    counter_b = False
-                    break
-            if counter_b != 0:
-                while node_a != self.root:
-                    counter_b += 1
-                    node_a = node_a.get_parent()
-
-        if depth_node_a > depth_node_b:
-            counter_a == 0
-            while node_a != node_b:
-                counter_a += 1
-                node_a = node_a.get_parent()
-                if node_a is None:
-                    counter_a = False
-                    break
-            if counter_a != 0:
-                while node_b != self.root:
-                    counter_a += 1
-                    node_b = node_b.get_parent()
-
-        if counter_a != False:
-            return ( -1, counter_a )
-        elif counter_b != False:
-            return ( -1, counter_b )
-        else:
-            return (min(depth_node_a, depth_node_b), abs(depth_node_a - depth_node_b)) 
-        
-  
+         
 f = Family("a")
 f.set_children("a", ["b", "c"])
 f.set_children("b", ["d", "e"])
@@ -278,29 +209,29 @@ words = ["zeroth", "first", "second", "third", "fourth", "fifth", "non"]
  
 ## The first test case should print out:
 ## 'b' is a zeroth cousin 0 removed from 'c'
-t, r = f.cousin("b", "l")
-print "'b' is a", words[t],"cousin", r, "removed from 'l'"
+t, r = f.cousin("h", "b")
+print "'c' is a", words[t],"cousin", r, "removed from 'l'"
  
 ## For the remaining test cases, use the graph to figure out what should 
 ## be printed, and make sure that your code prints out the appropriate values.
  
-t, r = f.cousin("d", "f")
-print "'d' is a", words[t],"cousin", r, "removed from 'f'"
-   
-t, r = f.cousin("i", "n")
-print "'i' is a", words[t],"cousin", r, "removed from 'n'"
-   
-t, r = f.cousin("q", "e")
-print "'q' is a", words[t], "cousin", r, "removed from 'e'"
-   
-t, r = f.cousin("h", "c")
-print "'h' is a", words[t], "cousin", r, "removed from 'c'"
-   
-t, r = f.cousin("h", "a")
-print "'h' is a", words[t], "cousin", r, "removed from 'a'"
-   
-t, r = f.cousin("h", "h")
-print "'h' is a", words[t], "cousin", r, "removed from 'h'"
-   
-t, r = f.cousin("a", "a")
-print "'a' is a", words[t], "cousin", r, "removed from 'a'"
+# t, r = f.cousin("d", "f")
+# print "'d' is a", words[t],"cousin", r, "removed from 'f'"
+#    
+# t, r = f.cousin("i", "n")
+# print "'i' is a", words[t],"cousin", r, "removed from 'n'"
+#    
+# t, r = f.cousin("q", "e")
+# print "'q' is a", words[t], "cousin", r, "removed from 'e'"
+#    
+# t, r = f.cousin("h", "c")
+# print "'h' is a", words[t], "cousin", r, "removed from 'c'"
+#    
+# t, r = f.cousin("h", "a")
+# print "'h' is a", words[t], "cousin", r, "removed from 'a'"
+#    
+# t, r = f.cousin("h", "h")
+# print "'h' is a", words[t], "cousin", r, "removed from 'h'"
+#    
+# t, r = f.cousin("a", "a")
+# print "'a' is a", words[t], "cousin", r, "removed from 'a'"
