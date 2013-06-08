@@ -161,11 +161,11 @@ class Family(object):
         def find_common_ancestor(n1, n2, ancest1 = [], ancest2 = [], count = 0):
             # BASE CASEs: if the parents of the node are the same, return the parent
             if n1 == n2: #means that n1 n2 was of the sane degree and reached at the same time recursively the common parent
-                return n1 # I may return n1.get_parrent() if I consider the parent node to be the common ancestor
+                return n1, count # I may return n1.get_parrent() if I consider the parent node to be the common ancestor
             elif n1 in ancest2: # n1 is lower than n2 in tree
-                return n1
+                return n1, count
             elif n2 in ancest1: # n2 is lower than n1 in tree
-                return n2
+                return n2, count
             # RECURSIVE CASE
             else:
                 # keep track of ancestors of n1 and n2
@@ -209,7 +209,7 @@ words = ["zeroth", "first", "second", "third", "fourth", "fifth", "non"]
  
 ## The first test case should print out:
 ## 'b' is a zeroth cousin 0 removed from 'c'
-t, r = f.cousin("h", "b")
+t, r = f.cousin("b", "m")
 print "'c' is a", words[t],"cousin", r, "removed from 'l'"
  
 ## For the remaining test cases, use the graph to figure out what should 
